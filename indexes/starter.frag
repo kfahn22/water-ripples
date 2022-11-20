@@ -59,7 +59,7 @@ vec4 Get8Neighbours(sampler2D sampler, vec2 uv)
     vec2 at;
     vec4 val;
    // boolean alive;
-    vec2 step = vec2(1.0) / u_resolution.x;
+    vec2 step = vec2(1.0) / u_resolution.xy;
     for(float x = -1.0; x < 2.0; x++)
     {
         for(float y = -1.0; y < 2.0; y++)

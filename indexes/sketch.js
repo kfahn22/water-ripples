@@ -13,7 +13,7 @@ let fboPrev = new Array(W * H).fill(255, 0, 0);
 function preload(){
   // load the shader
   img0 = loadImage('bella.jpeg');
-  imgShader = loadShader('starter.vert', 'cell.frag');
+  imgShader = loadShader('starter.vert', 'starter.frag');
 }
 
 //let fboPrev, fboNext
