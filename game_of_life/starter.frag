@@ -43,7 +43,7 @@ float GetNeighbors(vec2 p) {
   for (float y = -1.; y <=1.; y ++) {
     for (float x = -1.; x <=1.; x ++) {
       if (x==0. && y==0.) continue;
-      float val = texture2D(u_tex0, p + vec2(x, y)).x;
+      float val = texture2D(u_tex1, p + vec2(x, y)).r;
       if ( val > 0.5 ) {
         num += 1.0;
       }
@@ -74,6 +74,7 @@ void main( )
         }  
         col = vec3(next);
      }
-  
-    gl_FragColor = vec4(col, 1.0);
+    vec4 colt = texture2D(u_tex0, uv);
+    gl_FragColor = colt;
+    //gl_FragColor = vec4(col, 1.0);
 }
