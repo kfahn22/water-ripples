@@ -1,23 +1,20 @@
+#ifdef GL_ES
 precision highp float;
+#endif
 
 // vertex attributes
 attribute vec3 aPosition;
 attribute vec3 aNormal;
 attribute vec2 aTexCoord;
 
-// matrices
-uniform mat4 uViewMatrix;
-uniform mat4 uModelViewMatrix;
-uniform mat4 uProjectionMatrix;
-uniform mat3 uNormalMatrix;
+
 
 uniform sampler2D uSampler;
 uniform bool isTexture;
 uniform vec2 uTexSize;
 
-varying vec3 vNormal;
+
 varying vec2 vTexCoord;
-varying vec3 vViewPosition;
 
 
 vec2 tx = vec2(1.0/uTexSize.x, 0.0);

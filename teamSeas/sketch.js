@@ -3,7 +3,7 @@ let img0;
 let previous;
 
 function preload() {
-  rippleShader = loadShader("ripples.vert", "ripples.frag");
+  rippleShader = loadShader("water.vert", "water.frag");
 }
 
 // function mouseDragged() {

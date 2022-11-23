@@ -1,5 +1,10 @@
-const W = 250;
-const H = 250;
+// Based on Water Ripples Coding Challenge by Daniel Shiffman
+// https://thecodingtrain.com/challenges/102-2d-water-ripple
+
+// Refer to  https://codepen.io/Spongman/project/full/ArxVJQ/ for a 3D version of water ripples
+
+const W = 40;
+const H = 40;
 const dampening = 0.9;
 
 var surfaceShader;
@@ -8,25 +13,19 @@ let current = new Array(W * H).fill(0);
 let previous = new Array(W * H).fill(0);
 
 function preload() {
-  surfaceShader = loadShader('vs.glsl', 'fs.glsl');
+  surfaceShader = loadShader('ripples.frag', 'ripples.vert');
 }
 
 function setup() {
   // put setup code here
-  createCanvas(windowWidth, windowHeight, WEBGL);
-  setAttributes('perPixelLighting', true);
-
-  perspective(PI / 3, this.width / this.height, 0.1, 100);
-  camera(0, 3.5, 1, 0, 0, 0, 0, 1, 0);
-	
-	//rotateY(millis()/3000);
-
+  createCanvas(400, 400, WEBGL);
+  pixelDensity(1);
+ 
   shader(surfaceShader);
   surfaceShader.setUniform('uTexSize', [W, H]);
-
   surfaceTexture = createGraphics(W, H);
   surfaceTexture.background(0);
-  specularMaterial(255, 255, 255);
+  //specularMaterial(255, 255, 255);
   texture(surfaceTexture);
   noStroke();
 }
@@ -49,7 +48,7 @@ function draw() {
 	}
 
   surfaceTexture.loadPixels();
-
+ // for every non-edge element
   for (let y = 1; y < H - 1; y++) {
     const yi = y * W;
     for (let x = 1; x < W - 1; x++) {
@@ -74,8 +73,7 @@ function draw() {
   current = temp;
 
   // put drawing code here
-  background(50);
-  pointLight(255, 255, 255, 5, 10, 5);
-
-  plane(5, 5, W, H);
+  background(0);
+  
+  rect(-width/2, -height/2, width, height);
 }

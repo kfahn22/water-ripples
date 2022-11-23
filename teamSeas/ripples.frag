@@ -11,7 +11,7 @@ varying vec2 vTexCoord;
 void main() {
   
   // vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-  vec2 uv = vTexCoord;
+  vec2 uv = vTexCoord * 2.0 ;
   uv.y = 1.0 - uv.y;
   
 
