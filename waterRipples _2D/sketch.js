@@ -3,11 +3,6 @@
 
 // https://codepen.io/Spongman/project/full/ArxVJQ/, which has a 3D version of water ripples, was also a resource.
 
-// // colors for aqua
-let r = 44;
-let g = 197;
-let b = 244;
-
 const W = 40;
 const H = 40;
 const dampening = 0.92;
@@ -64,7 +59,7 @@ function draw() {
           previous[i + W]
         ) / 2 -
         current[i]);
-      current[i] = val + 10;
+      current[i] = val;
       surfaceTexture.set(x, y, val);
     }
   }
