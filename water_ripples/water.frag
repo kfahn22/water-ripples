@@ -16,7 +16,8 @@ uniform vec3 uAmbientColor;
 uniform vec4 uMaterialColor;
 uniform vec3 uSpecularColor;
 
-uniform sampler2D uSampler;
+//uniform sampler2D uSampler;
+uniform sampler2D u_tex0;
 uniform bool isTexture;
 
 

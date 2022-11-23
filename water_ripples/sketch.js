@@ -1,37 +1,52 @@
 // From https://codepen.io/Spongman/project/full/ArxVJQ/
 
-const W = 250;
-const H = 250;
+const W = 40;
+const H = 40;
 const dampening = 0.9;
 
-var surfaceShader;
-var surfaceTexture;
+var rippleShader;
+var rippleTexture;
+let img0;
 let current = new Array(W * H).fill(0);
 let previous = new Array(W * H).fill(0);
 
 function preload() {
-  surfaceShader = loadShader('vs.glsl', 'fs.glsl');
+  rippleShader = loadShader('starter.vert', 'starter.frag');
 }
 
 function setup() {
   // put setup code here
-  createCanvas(windowWidth, windowHeight, WEBGL);
-  setAttributes('perPixelLighting', true);
+  createCanvas(400, 400, WEBGL);
+  pixelDensity(1);
+  // img0 = createImage(400, 400);
+  // img0.loadPixels();
+  // for (let i = 0; i < img0.pixels.length; i += 4) {
+  //   let value = 0;
+  //   if (random(1) < 0.01) value = 255;
+  //   img0.pixels[i + 0] = value;
+  //   img0.pixels[i + 1] = value;
+  //   img0.pixels[i + 2] = value;
+  //   img0.pixels[i + 3] = 255;
+  // }
+  // img0.updatePixels();
+  // buffer = createGraphics(400, 400, WEBGL);
+  
 
-  perspective(PI / 3, this.width / this.height, 0.1, 100);
-  camera(0, 3.5, 1, 0, 0, 0, 0, 1, 0);
-	
-	//rotateY(millis()/3000);
 
-  shader(surfaceShader);
-  surfaceShader.setUniform('uTexSize', [W, H]);
-
-  surfaceTexture = createGraphics(W, H);
-  surfaceTexture.background(0);
-  specularMaterial(255, 255, 255);
-  texture(surfaceTexture);
+  shader(rippleShader);
+  rippleShader.setUniform('uTexSize', [W, H]);
+  rippleShader.setUniform("u_tex0", img0);
+  rippleShader.setUniform("u_resolution", [width, height]);
+  //rippleTexture = createGraphics(W, H);
+  //img0 = createGraphics(W, H);
+  img0 = createImage(W, H);
+  //rippleTexture.background(0);
+  img0.background(0);
+  //texture(rippleTexture);
+  texture(img0);
   noStroke();
 }
+
 
 function mouseDragged() {
 }
@@ -50,7 +65,8 @@ function draw() {
 		previous[x + y * W] = 255;		
 	}
 
-  surfaceTexture.loadPixels();
+  //rippleTexture.loadPixels();
+  img0.loadPixels();
 
   for (let y = 1; y < H - 1; y++) {
     const yi = y * W;
@@ -65,19 +81,18 @@ function draw() {
         ) / 2 -
         current[i]);
       current[i] = val;
-      surfaceTexture.set(x, y, val);
+      //rippleTexture.set(x, y, val);
+      img0.set(x, y, val);
     }
   }
-
-  surfaceTexture.updatePixels();
+  //rippleTexture.updatePixels();
+  img0.updatePixels();
 
   let temp = previous;
   previous = current;
   current = temp;
 
   // put drawing code here
-  background(50);
-  pointLight(255, 255, 255, 5, 10, 5);
-
-  plane(5, 5, W, H);
+  background(0);
+  rect(0, 0, W, H);
 }
