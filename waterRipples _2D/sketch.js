@@ -3,9 +3,10 @@
 
 // https://codepen.io/Spongman/project/full/ArxVJQ/, which has a 3D version of water ripples, was also a resource.
 
-const W = 40;
-const H = 40;
-const dampening = 0.92;
+
+const W = 80;
+const H = 80;
+const dampening = 0.99;
 
 var surfaceShader;
 var surfaceTexture;
@@ -42,7 +43,7 @@ function draw() {
 	if (mouseIsPressed) {
 		const x = floor(map(mouseX, 0, width, 0, W));
 		const y = floor(map(mouseY, 0, height, 0, H));
-		previous[x + y * W] = 255;		
+		previous[x + y * W] = 500;		
 	}
 
   surfaceTexture.loadPixels();
