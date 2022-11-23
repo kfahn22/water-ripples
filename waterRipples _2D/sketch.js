@@ -1,11 +1,11 @@
 // Based on Water Ripples Coding Challenge by Daniel Shiffman
 // https://thecodingtrain.com/challenges/102-2d-water-ripple
 
-// Refer to  https://codepen.io/Spongman/project/full/ArxVJQ/ for a 3D version of water ripples
+// Got inspiration from  https://codepen.io/Spongman/project/full/ArxVJQ/, which has a 3D version of water ripples
 
 const W = 40;
 const H = 40;
-const dampening = 0.9;
+const dampening = 0.99;
 
 var surfaceShader;
 var surfaceTexture;
@@ -18,7 +18,7 @@ function preload() {
 
 function setup() {
   // put setup code here
-  createCanvas(400, 400, WEBGL);
+  createCanvas(800, 800, WEBGL);
   pixelDensity(1);
  
   shader(surfaceShader);
