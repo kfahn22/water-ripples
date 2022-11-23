@@ -1,11 +1,16 @@
 // Based on Water Ripples Coding Challenge by Daniel Shiffman
 // https://thecodingtrain.com/challenges/102-2d-water-ripple
 
-// Got inspiration from  https://codepen.io/Spongman/project/full/ArxVJQ/, which has a 3D version of water ripples
+// https://codepen.io/Spongman/project/full/ArxVJQ/, which has a 3D version of water ripples, was also a resource.
+
+// // colors for aqua
+let r = 44;
+let g = 197;
+let b = 244;
 
 const W = 40;
 const H = 40;
-const dampening = 0.9;
+const dampening = 0.92;
 
 var surfaceShader;
 var surfaceTexture;
@@ -38,6 +43,7 @@ function draw() {
 	let y = floor(random(1, H - 1));
 	previous[x + y * W] = random(10, 255);
   
+  
 	if (mouseIsPressed) {
 		const x = floor(map(mouseX, 0, width, 0, W));
 		const y = floor(map(mouseY, 0, height, 0, H));
@@ -58,7 +64,7 @@ function draw() {
           previous[i + W]
         ) / 2 -
         current[i]);
-      current[i] = val;
+      current[i] = val + 10;
       surfaceTexture.set(x, y, val);
     }
   }
