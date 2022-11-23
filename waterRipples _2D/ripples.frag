@@ -13,7 +13,7 @@ void main() {
   
   float dx = (texture2D(uSampler, vTexCoord + tx).r - texture2D(uSampler, vTexCoord - tx).r) / 2.0;
   float dy = (texture2D(uSampler, vTexCoord + ty).g - texture2D(uSampler, vTexCoord - ty).g) / 2.0;
-  vec3 nx = vec3(tx, dx);
+  vec3 nx = clamp(vec3(tx, dx), vec3(0.0, 0.0), vec3(1.0, 1.0));
   vec3 ny = vec3(ty, dy);
   vec3 nmix = mix(nx, ny, 0.5);
   col = nx;
