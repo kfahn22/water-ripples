@@ -5,7 +5,7 @@
 
 const W = 40;
 const H = 40;
-const dampening = 0.99;
+const dampening = 0.9;
 
 var surfaceShader;
 var surfaceTexture;
@@ -25,7 +25,6 @@ function setup() {
   surfaceShader.setUniform('uTexSize', [W, H]);
   surfaceTexture = createGraphics(W, H);
   surfaceTexture.background(0);
-  //specularMaterial(255, 255, 255);
   texture(surfaceTexture);
   noStroke();
 }
@@ -38,9 +37,7 @@ function draw() {
 	let x = floor(random(1, W - 1));
 	let y = floor(random(1, H - 1));
 	previous[x + y * W] = random(10, 255);
-	
-	//rotateZ(millis()/4000);
-	
+  
 	if (mouseIsPressed) {
 		const x = floor(map(mouseX, 0, width, 0, W));
 		const y = floor(map(mouseY, 0, height, 0, H));
