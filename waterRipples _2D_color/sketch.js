@@ -1,14 +1,13 @@
 // Based on Water Ripples Coding Challenge by Daniel Shiffman
 // https://thecodingtrain.com/challenges/102-2d-water-ripple
 
-// https://thecodingtrain.com/challenges/90-dithering
 
 // https://codepen.io/Spongman/project/full/ArxVJQ/, which has a 3D version of water ripples, was also a resource.
 
 
-const W = 80;
-const H = 80;
-const dampening = 0.99;
+const W = 400;
+const H = 400;
+const dampening = 0.995;
 
 var surfaceShader;
 var surfaceTexture;
@@ -29,41 +28,42 @@ function imageIndex(img, x, y) {
 
 function setup() {
   // put setup code here
-  createCanvas(800, 800, WEBGL);
-  pixelDensity(1);
-
+  createCanvas(400, 400, WEBGL);
+  //pixelDensity(1);
+  setAttributes('perPixelLighting', true);
   shader(surfaceShader);
   surfaceShader.setUniform('uTexSize', [W, H]);
-  surfaceTexture = createGraphics(W, H);
+  surfaceShader.setUniform("u_resolution", [width, height]);
+  surfaceShader.setUniform("u_tex0", img);
+  buffer = createGraphics(W, H);
   // surfaceTexture.background(0);
-  surfaceTexture.background(img);
-  texture(surfaceTexture);
-
+  normalMaterial();
+  buffer.background(0);
+  texture(buffer);
+  noCursor();
   noStroke();
 }
 
-function mouseDragged() {}
-
 function draw() {
-  let d = pixelDensity();
+  //let d = pixelDensity();
   let x = floor(random(1, W - 1));
   let y = floor(random(1, H - 1));
-  for (let i = 1; i < d; i++) {
-    for (let j = 1; j < d; j++) {
+  // for (let i = 1; i < d; i++) {
+  //   for (let j = 1; j < d; j++) {
       // loop over
-      previous[i + j * W] = img.get(i, j);
+      //previous[i + j * W] = img.get(i, j);
       //previous[x + y * W] = get(x, y);
-      //previous[x + y * W] = random(10, 255);
-    }
-  }
+     previous[x + y * W] = random(10, 255);
+  //   }
+  // }
 
   if (mouseIsPressed) {
     const x = floor(map(mouseX, 0, width, 0, W));
     const y = floor(map(mouseY, 0, height, 0, H));
-    previous[x + y * W] = 200;
+    previous[x + y * W] = 1000;
   }
 
-  surfaceTexture.loadPixels();
+  buffer.loadPixels();
   // for every non-edge element
   for (let y = 1; y < H - 1; y++) {
     const yi = y * W;
@@ -78,11 +78,11 @@ function draw() {
         ) / 2 -
         current[i]);
       current[i] = val;
-      surfaceTexture.set(x, y, val);
+      buffer.set(x, y, val);
     }
   }
 
-  surfaceTexture.updatePixels();
+  buffer.updatePixels();
 
   let temp = previous;
   previous = current;
@@ -91,5 +91,7 @@ function draw() {
   // put drawing code here
   background(0);
 
+  // Blue water ripples
+  pointLight(100, 255, 255);
   rect(-width / 2, -height / 2, width, height);
 }
