@@ -35,8 +35,6 @@ function setup() {
 
 function mousePressed() {
   // previous.loadPixels();
-
-
 }
 
 function draw() {
