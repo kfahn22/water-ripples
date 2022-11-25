@@ -42,8 +42,9 @@ float GetNeighbors(vec2 p) {
   float num = 0.;
   for (float y = -1.; y <=1.; y ++) {
     for (float x = -1.; x <=1.; x ++) {
+      tx = vec2(x,y);
       if (x==0. && y==0.) continue;
-      float val = texture2D(u_tex1, p + vec2(x, y)).r;
+      float val = texture2D(u_tex1, p + tx).r;
       if ( val > 0.5 ) {
         num += 1.0;
       }
@@ -54,8 +55,8 @@ float GetNeighbors(vec2 p) {
 
 void main( )
 {
-    // Normalized pixel coordinates (from 0 to 1)
-    vec2 uv = gl_FragCoord.xy/u_resolution.xy;
+    
+   vec2 uv = vTexCoord.xy;
     float t =  iTime;
     vec3 col = vec3(0);
     bool alive;

@@ -5,8 +5,8 @@
 // https://codepen.io/Spongman/project/full/ArxVJQ/, which has a 3D version of water ripples, was also a resource.
 
 
-const W = 400;
-const H = 400;
+const W = 200;
+const H = 200;
 const dampening = 0.995;
 
 var surfaceShader;
@@ -37,7 +37,7 @@ function setup() {
   surfaceShader.setUniform("u_tex0", img);
   buffer = createGraphics(W, H);
   // surfaceTexture.background(0);
-  normalMaterial();
+  ambientMaterial(0,255,255);
   buffer.background(0);
   texture(buffer);
   noCursor();
