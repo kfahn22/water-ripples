@@ -9,6 +9,7 @@ let fboPrev, fboNext
 function preload() {
     img0 = loadImage('assets/rocks.jpeg');
     rippleShader = loadShader('image.frag', 'ripples.vert');
+    bufferShader = loadShader('rippes.frag', 'ripples.vert');
 }
 
 function setup() {
