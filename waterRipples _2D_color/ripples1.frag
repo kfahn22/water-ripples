@@ -7,7 +7,7 @@ uniform sampler2D u_tex0;
 varying vec2 vTexCoord;
 
 void main() {
-  vec2 uv = vTexCoord.xy;
+  vec2 uv = 2* vTexCoord.xy;
   vec2 tx = vec2(1.0, 0.0);
   
   vec3 col; 
@@ -19,5 +19,5 @@ void main() {
   vec3 finalColor = vec3(0.0);
   finalColor.g = imgTex.r;
   finalColor.r = dx;
-  gl_FragColor = vec4(imgTex, 1.0);
+  gl_FragColor = vec4(col, 1.0);
 }
