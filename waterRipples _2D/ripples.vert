@@ -1,9 +1,6 @@
 #ifdef GL_ES
 precision highp float;
 #endif
-#ifdef GL_ES
-precision highp float;
-#endif
 
 attribute vec3 aPosition;
 attribute vec2 aTexCoord;

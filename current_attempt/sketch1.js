@@ -1,12 +1,13 @@
 // Example code
 // https://github.com/davepagurek/p5.Framebuffer
-
+let W = 200;
+let H = 200;
 let fboPrev;
 let fboNext;
 let canvas;
 
 function preload() {
-    img0 = loadImage('rocks.jpeg')
+    img0 = loadImage('assets/rocks.jpeg')
     rippleShader = loadShader('ripples.frag', 'ripples.vert');
   }
 
@@ -41,11 +42,11 @@ function draw() {
     _renderer.GL.disable(_renderer.GL.DEPTH_TEST)
     push();
     rippleShader.setUniform('uTexSize', [W, H]);
-    rippleShader.setUniform('iMouse', iMouse);
-    rippleShader.setUniform('iTime', iTime);
-    
+    rippleShader.setUniform('u_tex0', fboPrev.color);
+    rippleShader.setUniform("iMouse", [mouseX, map(mouseY, 0, height, height, 0)]);
+    rippleShader.setUniform("iTime", millis() / 1000.);
     scale(1.003);
-    texture(fboPrev.color);
+    //texture(fboPrev.color);
     shader(rippleShader);
     rect(-width/2, -height/2, width, height);
     pop()
@@ -53,7 +54,6 @@ function draw() {
   })
 
   clear();
-
   push()
   texture(fboNext.color)
   rect(-width/2, -height/2, width, height);

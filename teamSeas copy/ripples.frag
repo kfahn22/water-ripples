@@ -11,7 +11,7 @@ varying vec2 vTexCoord;
 void main() {
   
   // vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-  vec2 uv = vTexCoord;
+  vec2 uv = vTexCoord.xy;
   uv.y = 1.0 - uv.y;
   
   vec4 col = texture2D(u_tex0, uv);
@@ -27,13 +27,9 @@ void main() {
 	float viscosityConstant = 0.997;
     float damping = 0.997;
     float tex = ( ( n.r + s.r + e.r + w.r ) * 0.5 - col.g ) * viscosityConstant;
-	//newHeight *= damping;
-  // vec2 left = vec2(-1.0,0.0) / u_resolution.xy;
-  // vec2 uv_left = uv + left;
-  // vec4 tex_left = texture2D(u_tex0, uv_left);
-  // vec4 tex = texture2D(u_tex0, uv);
-  col = vec4(tex, tex, tex, 1.);
-  gl_FragColor = col;
+
+  col = vec3(tex);
+  gl_FragColor = vec4(col, 1.0)
 }
 
 

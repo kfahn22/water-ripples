@@ -12,37 +12,21 @@ varying vec2 vTexCoord;
 
 void main() {
   vec2 uv = vTexCoord.xy;
-  //vec2 st = gl_FragCoord.xy / u_resolution.xy;
-  vec2 st = vTexCoord.xy / u_resolution.xy;
-  float nFactor = 10.;
-  vec2 step = 2. / u_resolution.xy;
-  vec2 tx = vec2(1.0, 0.2);
-  vec2 ty = vec2(0.0, 1.0);
-  vec3 col = vec3(0.0);
+  vec2 st =  (2.0*gl_FragCoord.xy-u_resolution.xy)/u_resolution.y;
+  vec2 tx = vec2(1.0, 0.0);
+  //vec2 ty = vec2(0.0, 1.0);
+  vec3 col;
+  vec3 imgTex = texture2D(u_tex0, st).rgb;
   
-  float nx = (texture2D(u_tex0, vTexCoord + tx).r - texture2D(u_tex0, vTexCoord - tx).r) / 2.0;
-  float ny = (texture2D(uSampler, vTexCoord + ty).g - texture2D(uSampler, vTexCoord - ty).g) / 2.0;
-  // vec3 normal = normalize(vec3(nx * nFactor, 1., ny * nFactor));
-  //  // blur the image a bit
-  //   vec3 n = texture2D( uSampler, st + normal.xz + step * vec2( 0., 1.) ).rgb;
-  //   vec3 s = texture2D( uSampler, st + normal.xz + step * vec2( 0., -1.) ).rgb;
-  //   vec3 e = texture2D( uSampler, st + normal.xz + step * vec2( 1., 0.) ).rgb;
-  //   vec3 w = texture2D( uSampler, st+ normal.xz + step * vec2( -1., 0.) ).rgb;
-  //   vec3 finalColor = (n + s + e + w) / 4.; 
-    
-    // add some pseudo specular lighting
-  //   float fovFakeFactor = 5.;
-  //   vec3 inverseLightDir = normalize(vec3(2., 1., 1.4));
-  //   vec3 inverseViewDir = normalize(vec3(0., 1., 0.) + vec3(uv.x, 0., uv.y) * fovFakeFactor);
-  //   vec3 lightColor = vec3(1.);
-  //   vec3 halfwayDir = normalize(inverseLightDir + inverseViewDir);
-  //   float spec = pow(max(dot(normal, halfwayDir), 0.0), 4.);
-	// vec3 specular = lightColor * spec;
-	//finalColor += specular * 2.;
-
-  vec3 nx = vec3(tx, dx);
-  // vec3 ny = vec3(ty, dy);
-  // vec3 nmix = mix(nx, ny, 0.5);
-  col = nx;
-  gl_FragColor = vec4(col, 1.0);
+  float dx = (texture2D(uSampler, vTexCoord + tx).r - texture2D(uSampler, vTexCoord - tx).r) / 2.0;
+  //float cy = (texture2D(uSampler, vTexCoord + ty).g - texture2D(uSampler, vTexCoord - ty).g) / 2.0;
+  vec3 nx = clamp(vec3(tx, dx), vec3(0.0), vec3(1.0));
+  col += nx;
+// simulate buffer swapping with channels r,g
+    // vec3 finalColor = vec3(0.);
+    // finalColor.g = col.r;
+    // finalColor.r = nx;
+    //col = col1.rgb;
+    gl_FragColor = vec4(col, 1.0);
+ // gl_FragColor = vec4(col, 1.0);
 }

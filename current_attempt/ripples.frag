@@ -19,18 +19,18 @@ void main()
 {  
 	//vec2 uv = gl_FragCoord.xy / u_resolution.xy;
    //vec2 uv = vTexCoord * 2.0 ;
-    vec2 uv = vTexCoord.xy;
+    vec2 uv = vTexCoord;
     // lets calculate normals for distortion
    float nFactor = 10.;
-   vec2 step = 2. / u_resolution.xy;
-   vec2 xd = vec2( 1., 0.);
-   vec2 yd = vec2( 0., 1.);
+   vec2 step = 2.0 / u_resolution.xy;
+   vec2 xd = vec2( 1.0, 0.0);
+   vec2 yd = vec2( 0.0, 1.0);
    //vec4 water = waterLogic(uSampler, uv);
 
-	float nx = texture2D( uSampler, uv + step * xd ).r - texture2D( u_tex0, uv - step * xd ).r;
-    float ny = texture2D( uSampler, uv + step * yd ).r - texture2D( u_tex0, uv - step * yd ).r;
-    vec3 normal = normalize(vec3(nx * nFactor, 1., ny * nFactor));
-    
+	float nx = (texture2D( u_tex0, uv + step * xd ).r - texture2D( u_tex0, uv - step * xd ).r)/2.0;
+    float ny = (texture2D( u_tex0, uv + step * yd ).r - texture2D( u_tex0, uv - step * yd ).r)/2.0;
+    //vec3 normal = normalize(vec3(nx * nFactor, 1., ny * nFactor));
+    vec3 col = vec3(nx, xd);
     // blur the image a bit
     // vec3 n = texture2D( u_tex0, uv + normal.xz + step * vec2( 0., 1.) ).rgb;
     // vec3 s = texture2D( u_tex0, uv + normal.xz + step * vec2( 0., -1.) ).rgb;
@@ -53,6 +53,6 @@ void main()
     // float brightness = clamp(waterHeight*10., 0., 0.1);
     // finalColor += vec3(brightness);
     
-    gl_FragColor = vec4(normal, 1.);
+    gl_FragColor = vec4(col, 1.);
 }
 

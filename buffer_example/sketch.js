@@ -31,7 +31,7 @@ function draw() {
     background(255)
 
     // Disable depth testing so that the image of the previous
-    // frame doesn't cut off the sube
+    // frame doesn't cut off the cube
     _renderer.GL.disable(_renderer.GL.DEPTH_TEST)
     push()
     scale(1.003)

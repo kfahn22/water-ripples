@@ -1,9 +1,6 @@
 #ifdef GL_ES
 precision highp float;
 #endif
-#ifdef GL_ES
-precision highp float;
-#endif
 
 attribute vec3 aPosition;
 attribute vec2 aTexCoord;
@@ -16,5 +13,4 @@ void main() {
   gl_Position = positionVec4;
   
   vTexCoord = aTexCoord;
-  
 }
