@@ -28,10 +28,17 @@ function setup() {
     const pixelation_level = width/W;
     image(img, 0, 0, width, height);
     loadPixels();
-    for (let x = 0; x < width; x += pixelation_level) {
-        for (let y = 0; y < height; y += pixelation_level) {
+    // let x = floor(random(1, W - 1));
+   // let y = floor(random(1, H - 1));
+   // previous[x + y * W] = random(10, 255);
+   for (let y = 1; y < H - 1; y++) {
+    const yi = y * W;
+    for (let x = 1; x < W - 1; x++) {
+        const i = x + yi;
+    // for (let x = 1; x < width; x += pixelation_level) {
+    //     for (let y = 1; y < height; y += pixelation_level) {
 
-            let i = (x + y * width) * 4;
+            //let i = (x + y * width) * 4;
 
             let r = pixels[i + 0];
             let g = pixels[i + 1];

@@ -7,7 +7,7 @@ uniform sampler2D u_tex0;
 varying vec2 vTexCoord;
 
 void main() {
-  vec2 uv = 2* vTexCoord.xy;
+  vec2 uv = 2 * vTexCoord.xy;
   vec2 tx = vec2(1.0, 0.0);
   
   vec3 col; 
