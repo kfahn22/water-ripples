@@ -65,7 +65,7 @@ float Get8Neighbours(sampler2D sampler, vec2 uv)
                 at = vec2(x,y);
                 //val = texture2D(sampler, uv);
                 val = texture2D(sampler, vTexCoord + at * step);
-                if (val.r > 0.5) {
+                if (val.r > 0.9) {
                     sum += 1.0;
                 }
                 //val = min(val, val1);
@@ -93,9 +93,14 @@ void main()
     //         pct = sin(3.1415926 * index * time),
     //           v = xy.y - .5*pct;
    //vec4 val = Get8Neighbours( u_tex0, uv );
+
+
+   // sum = 0 dog purple, background black
+   // sum = 1 - 7 outline of dog, background black
+   // sum = 8 dog black, background purple
    float sum = Get8Neighbours( u_tex0, uv );
-   if (sum == 1.0) {
-       col = vec3(1.0, 0.2, 1.0);
+   if (sum == 3.0) {
+       col = vec3(0.5, 0.1, 0.8);
    }
    //gl_FragColor = val;
    gl_FragColor = vec4( col, 1.0);

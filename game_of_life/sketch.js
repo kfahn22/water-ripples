@@ -1,6 +1,8 @@
 
 const W = 100;
 const H = 100;
+let dampening = 0.99;
+
 var surfaceShader;
 var buffer;
 let current = new Array(W * H).fill(0);
@@ -8,8 +10,8 @@ let previous = new Array(W * H).fill(0);
 
 function preload(){
   // load the shader
-
   myShader = loadShader('starter.vert', 'starter.frag');
+  img = loadImage('jelly.jpeg');
 }
 
 function setup() {
@@ -17,7 +19,9 @@ function setup() {
   
   shader(myShader);
   myShader.setUniform('uTexSize', [W, H]);
+  myShader.setUniform('u_tex0', img);
   buffer = createGraphics(W, H);
+  
   buffer.background(0);
   texture(buffer);
   noStroke();
@@ -42,7 +46,7 @@ function draw() {
           previous[i - W] +
           previous[i + W]
         ) / 2 -
-        current[i]);
+        current[i]) * dampening;
       current[i] = val;
       buffer.set(x, y, val);
     }

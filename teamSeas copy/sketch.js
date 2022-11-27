@@ -41,6 +41,9 @@ function draw() {
   background(220);
   rippleShader.setUniform("u_resolution", [width, height]);
   rippleShader.setUniform("u_tex0", img0);
+  rippleShader.setUniform("iMouse", [mouseX, map(mouseY, 0, height, height, 0)]);
+  rippleShader.setUniform("iTime", millis()/1000.);
+  //texture(buffer);
   buffer.shader(rippleShader);
   buffer.rect(0, 0, width, height);
   img0.copy(buffer, 0, 0, width, height, 0, 0, width, height);

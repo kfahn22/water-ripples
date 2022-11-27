@@ -13,18 +13,13 @@ uniform float iTime;
 uniform vec2 iMouse;
 uniform float iFrame;
 uniform sampler2D u_tex0;
-uniform sampler2D u_tex1;
+uniform sampler2D uSampler;
+varying vec2 vTexCoord;
+
 #define S smoothstep
 
 float N21( vec2 p) {
     return fract( sin(p.x*100. + p.y*6574.)*5674. );
-}
-
-vec3 Fuzzy( vec2 p ) {
-  float v1 = N21(p*23.42);
-  float v2 = N21(p*45.23);
-  float v3 = N21(p*35.12);
-  return  vec3(v1, v2, v3);
 }
 
 float remap01(float a, float b, float t)
@@ -38,13 +33,14 @@ float remap(float a, float b, float c, float d, float  t)
   return remap01(a,b,t) * (d-c) + c;
 }
 
-float GetNeighbors(vec2 p) {
+
+float GetNeighbors(sampler2D uSampler, vec2 p) {
   float num = 0.;
   for (float y = -1.; y <=1.; y ++) {
     for (float x = -1.; x <=1.; x ++) {
-      tx = vec2(x,y);
+      vec2 tx = vec2(x,y);
       if (x==0. && y==0.) continue;
-      float val = texture2D(u_tex1, p + tx).r;
+      float val = texture2D(uSampler, p + tx).r;
       if ( val > 0.5 ) {
         num += 1.0;
       }
@@ -55,16 +51,16 @@ float GetNeighbors(vec2 p) {
 
 void main( )
 {
-    
-   vec2 uv = vTexCoord.xy;
-    float t =  iTime;
-    vec3 col = vec3(0);
-    bool alive;
+  vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+  vec2 st = vTexCoord.xy;
+  float t =  iTime;
+  vec3 col = vec3(0);
+  bool alive;
       if (iFrame < 40.0) { // initialize
          col = texture2D(u_tex0, uv).rgb;
        } else {
         float num = GetNeighbors(uv);
-        if (texture2D(u_tex1, uv).r > 0.5) {
+        if (texture2D(u_tex0, uv).r > 0.75) {
              alive = true;
         }
         float next = 0.0;
@@ -75,7 +71,7 @@ void main( )
         }  
         col = vec3(next);
      }
-    vec4 colt = texture2D(u_tex0, uv);
-    gl_FragColor = colt;
+    vec4 col = texture2D(u_tex0, uv);
+    gl_FragColor = col;
     //gl_FragColor = vec4(col, 1.0);
 }
