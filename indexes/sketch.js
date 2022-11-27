@@ -1,4 +1,5 @@
-
+// This sketch explores how to load an image and manipulate it in a shader
+// Using indexes
 
 const W = 600;
 const H = 600;
@@ -13,7 +14,7 @@ let fboPrev = new Array(W * H).fill(255, 0, 0);
 function preload(){
   // load the shader
   img0 = loadImage('bella.jpeg');
-  imgShader = loadShader('starter.vert', 'starter.frag');
+  imgShader = loadShader('starter.vert', 'starter1.frag');
 }
 
 //let fboPrev, fboNext

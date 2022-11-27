@@ -5,8 +5,8 @@
 // https://codepen.io/Spongman/project/full/ArxVJQ/, which has a 3D version of water ripples, was also a resource.
 
 
-const W = 200;
-const H = 200;
+const W = 600;
+const H = 600;
 const dampening = 0.995;
 
 var rippleShader;
@@ -27,7 +27,7 @@ function preload() {
 
 function setup() {
   // put setup code here
-  createCanvas(400, 400, WEBGL);
+  createCanvas(600, 600, WEBGL);
   //pixelDensity(1);
   setAttributes('perPixelLighting', true);
 

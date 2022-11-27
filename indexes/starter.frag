@@ -28,11 +28,6 @@ float N21( vec2 p) {
     return fract( sin(p.x*100. + p.y*6574.)*5674. );
 }
 
-// Arrays are allowed as arguments, but not as the return type. When arrays are declared as formal parameters, their size must be included. An array is passed to a function by using the array name without any subscripting or brackets, and the size of the array argument passed in must match the size specified in the formal parameter declaration.
-// float f[32] = float[32]( 2.,1000.,3.,4.,5., 6.,7.,8.,9.,11.,12.,150.,99.,
-//                      40.,1.,10000.,2.,1100.,12.,100.,1000.,400.,210.,112.,113.,131.,
-//                      1300.,110.,1139.,1108.,1313.,1.);
-
 // vec4[8] Get8Neighbours(sampler2D sampler)
 // {
 //     int i = 0;
@@ -68,7 +63,7 @@ vec4 Get8Neighbours(sampler2D sampler, vec2 uv)
             {
                 at = vec2(x,y);
                 //val = texture2D(sampler, vTexCoord);
-              val = texture2D(sampler, uv);
+                val = texture2D(sampler, uv);
                 vec4 val1 = texture2D(sampler, vTexCoord + (vec2(-1., 0.) * step));
                 val = min(val, val1);
                 // vec4 val2 = texture2D(sampler, vTexCoord - (at * step));
