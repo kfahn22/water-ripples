@@ -20,6 +20,6 @@ function draw() {
     imgShader.setUniform("u_resolution", [width, height]);
     imgShader.setUniform("u_tex0", img);
     shader(imgShader);
-    texture(img);
+    texture(img);  // this is what is drawing image to screen
     rect(0,0, width, height);
 }

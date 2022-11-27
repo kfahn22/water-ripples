@@ -7,14 +7,10 @@ const H = 600;
 let imgShader;
 let img0;
 
-let fboNext;
-let fboPrev = new Array(W * H).fill(255, 0, 0);
-// let canvas
-
 function preload(){
   // load the shader
   img0 = loadImage('bella.jpeg');
-  imgShader = loadShader('starter.vert', 'starter.frag');
+  imgShader = loadShader('starter.vert', 'starter1.frag');
 }
 
 //let fboPrev, fboNext

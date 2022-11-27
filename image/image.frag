@@ -7,6 +7,7 @@ uniform float iTime;
 uniform vec2 iMouse;
 uniform float iFrame;
 uniform sampler2D u_tex0;
+uniform sampler2D uSampler;
 varying vec2 vTexCoord;
 
 vec4 Get8Neighbours(sampler2D sampler, vec2 uv)
@@ -30,13 +31,14 @@ vec4 Get8Neighbours(sampler2D sampler, vec2 uv)
 
 void main() {
   vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-  float n = 1;
+  float n = 4;
 
   uv *= vec2(n,n);
   uv.y = 1.0 - uv.y;
   // vec3 col=vec3(0); 
-  vec4 imgTex = texture2D(u_tex0, uv);
-  //vec4 imgTex = Get8Neighbours( u_tex0, uv );
+// vec4 imgTex = texture2D(u_tex0, uv);
+ // vec4 imgTex = texture2D(uSampler, uv);
+  vec4 imgTex = Get8Neighbours( u_tex0, uv );
   
   gl_FragColor = imgTex;
 }
