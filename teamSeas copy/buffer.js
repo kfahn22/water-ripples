@@ -1,9 +1,29 @@
+const vert = `
+#ifdef GL_ES
+precision highp float;
+#endif
+
+attribute vec3 aPosition;
+attribute vec2 aTexCoord;
+
+varying vec2 vTexCoord;
+
+void main() {
+  vec4 positionVec4 = vec4(aPosition, 1.0);
+  positionVec4.xy = positionVec4.xy * 2.0 - 1.0;
+  gl_Position = positionVec4;
+  
+  vTexCoord = aTexCoord;
+}
+`
+const frag = `
 #ifdef GL_ES
 precision highp float;
 #endif
 
 uniform vec2 u_resolution;
 uniform sampler2D u_tex0;
+uniform sampler2D buffer;
 uniform vec2 iMouse;
 uniform float iTime;
 
@@ -71,5 +91,4 @@ void main() {
    vec3 col = vec3(rip);
   gl_FragColor = vec4(col, 1.0);
 }
-
-
+`

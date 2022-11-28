@@ -3,7 +3,7 @@ let img0;
 let previous;
 
 function preload() {
-  rippleShader = loadShader("water.vert", "water.frag");
+  rippleShader = loadShader("ripples.vert", "ripples.frag");
 }
 
 // function mouseDragged() {
@@ -47,7 +47,7 @@ function draw() {
   buffer.rect(0, 0, width, height);
   img0.copy(buffer, 0, 0, width, height, 0, 0, width, height);
   img0.updatePixels();
-  image(buffer, -width / 2, -height / 2);
+  image(buffer,-width / 2, -height / 2);
   
   // if (mouseIsPressed) {
   //   for (let i = 0; i < img0.pixels.length; i += 4) {

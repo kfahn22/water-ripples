@@ -1,9 +1,13 @@
-let rippleShader;
 let img0;
-let previous;
+
+const shaders = [];
 
 function preload() {
-  rippleShader = loadShader("ripples.vert", "ripples.frag");
+  // load the shaders
+  shaders.push(loadShader('shader1.vert', 'shader1.frag'));
+  shaders.push(loadShader('shader2.vert', 'shader2.frag'));
+  //shaders.push(loadShader('shader3.vert', 'shader3.frag'));
+  theShader = shaders[0]; // start with the first shader
 }
 
 // function mouseDragged() {
@@ -19,8 +23,10 @@ function preload() {
 function setup() {
   createCanvas(400, 400, WEBGL);
   pixelDensity(1);
-  previous = createGraphics(400, 400, WEBGL);
-  img0 = previous.createImage(400, 400);
+
+  buffer = createGraphics(400, 400, WEBGL);
+  current = createGraphics(400,400, WEBGL);
+  img0 = buffer.createImage(400, 400);
   img0.loadPixels();
   for (let i = 0; i < img0.pixels.length; i += 4) {
     let value = 0;
@@ -31,7 +37,6 @@ function setup() {
     img0.pixels[i + 3] = 255;
   }
   img0.updatePixels();
-  buffer = createGraphics(400, 400, WEBGL);
 }
 
 function mousePressed() {
@@ -40,30 +45,11 @@ function mousePressed() {
 
 function draw() {
   background(220);
-  rippleShader.setUniform("u_resolution", [width, height]);
-  rippleShader.setUniform("u_tex0", img0);
-  rippleShader.setUniform("iMouse", [mouseX, map(mouseY, 0, height, height, 0)]);
-  rippleShader.setUniform("iTime", millis()/1000.);
-  //texture(buffer);
-  buffer.shader(rippleShader);
+  theShader.setUniform("u_resolution", [width, height]);
+  theShader.setUniform("u_tex0", img0);
+  buffer.shader(theShader);
   buffer.rect(0, 0, width, height);
-  // img0.copy(buffer, 0, 0, width, height, 0, 0, width, height);
-  // img0.updatePixels();
-
-  let temp = previous;
-  previous = buffer;
-  buffer = temp;
+  img0.copy(buffer, 0, 0, width, height, 0, 0, width, height);
+  img0.updatePixels();
   image(buffer, -width / 2, -height / 2);
-  
-  // if (mouseIsPressed) {
-  //   for (let i = 0; i < img0.pixels.length; i += 4) {
-  //     if (random(1) < 0.01) {
-  //       img0.pixels[i + 0] = 255;
-  //       img0.pixels[i + 1] = 255;
-  //       img0.pixels[i + 2] = 255;
-  //       img0.pixels[i + 3] = 255;
-  //     }
-  //   }
-  //   img0.updatePixels();
-  // }
 }

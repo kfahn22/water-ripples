@@ -23,7 +23,6 @@ function setup() {
   //pixelDensity(1);
   setAttributes('perPixelLighting', true);
 
- 
   shader(surfaceShader);
   surfaceShader.setUniform('uTexSize', [W, H]);
   surfaceTexture = createGraphics(W, H);
@@ -31,9 +30,6 @@ function setup() {
   texture(surfaceTexture);
   noStroke();
   noCursor();
-}
-
-function mouseDragged() {
 }
 
 function draw() {
@@ -76,6 +72,7 @@ function draw() {
 
   // put drawing code here
   background(0);
-  
+   // Blue water ripples
+  //pointLight(100, 255, 255);
   rect(-width/2, -height/2, width, height);
 }
