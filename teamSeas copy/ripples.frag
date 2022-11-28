@@ -52,7 +52,7 @@ vec3 Ripples(sampler2D uSampler, vec2 uv )
     newHeight += noiseCombo * 0.0002;
     
     // simulate buffer swapping with channels r,g
-    vec3 finalColor = vec3(0.);
+    vec3 finalColor = vec3(0.0);
     finalColor.g = col.r;
     finalColor.r = newHeight;
 
@@ -66,7 +66,7 @@ void main() {
   uv.y = 1.0 - uv.y;
   
   vec3 rip = Ripples(u_tex0, uv);
-
+  //vec3 col = vec3(rip.r);
   //vec3 col = vec3(rip);
   gl_FragColor = vec4(rip, 1.0);
 }

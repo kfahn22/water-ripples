@@ -19,7 +19,8 @@ function preload() {
 function setup() {
   createCanvas(400, 400, WEBGL);
   pixelDensity(1);
-  img0 = createImage(400, 400);
+  previous = createGraphics(400, 400, WEBGL);
+  img0 = previous.createImage(400, 400);
   img0.loadPixels();
   for (let i = 0; i < img0.pixels.length; i += 4) {
     let value = 0;
@@ -46,8 +47,12 @@ function draw() {
   //texture(buffer);
   buffer.shader(rippleShader);
   buffer.rect(0, 0, width, height);
-  img0.copy(buffer, 0, 0, width, height, 0, 0, width, height);
-  img0.updatePixels();
+  // img0.copy(buffer, 0, 0, width, height, 0, 0, width, height);
+  // img0.updatePixels();
+
+  let temp = previous;
+  previous = buffer;
+  buffer = temp;
   image(buffer, -width / 2, -height / 2);
   
   // if (mouseIsPressed) {
