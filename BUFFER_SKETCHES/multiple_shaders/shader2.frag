@@ -13,7 +13,7 @@ uniform float iTime;
 varying vec2 vTexCoord;
 
 #define S smoothstep
-#define PURPLE vec3(146,83,161)/255
+#define PURPLE vec3(146,83,161)/255.
 
 vec4 Ripples(sampler2D uSampler, vec2 uv )
 {
@@ -64,6 +64,11 @@ vec4 Ripples(sampler2D uSampler, vec2 uv )
  return vec4(finalColor, 1.0);
   }
 
+float sdCircle( vec2 p, float r )
+{
+    return length(p) - r;
+}
+
 float sdBox( in vec2 p, in vec2 b )
 {
     vec2 d = abs(p)-b;
@@ -71,56 +76,12 @@ float sdBox( in vec2 p, in vec2 b )
 }
 
 void main() {
-  vec2 uv =(2.0 * gl_FragCoord.xy - u_resolution.xy) / u_resolution.y;
-  vec3 col = texture2D(u_tex0, uv).rgb;
-  float d = sdBox(uv, vec2(0.1));
-  float m = S(0.08, 0.0, d);
+  //vec2 uv =(2.0 * gl_FragCoord.xy - u_resolution.xy) / u_resolution.y;
+  vec3 col = vec3(0.0);
+  vec2 uv = vTexCoord * 2.0 ;
+  uv.y = 1.0 - uv.y;
+  float d = sdCircle( uv - vec2(0.4, 0.0), 0.05);
+  float m = S(0.008, 0.0, d);
   col += m*PURPLE;
   gl_FragColor = vec4(col, 1.0);
 }
-// void main() {
-  
-//   // vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-//   vec2 uv = vTexCoord;
-//   uv.y = 1.0 - uv.y;
-//   vec2 up = vec2(1.0,-1.0) / u_resolution.xy;
-//   vec2 uv_up = uv + up;
-//   vec4 tex_up = texture2D(u_tex0, uv_up);
-//   vec4 tex = texture2D(u_tex0, uv);
-//   vec4 color = max(tex,tex_up);
-//   gl_FragColor = color;
-// }
-
-
-// void main() {
-  
-// //vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-//   vec2 uv =  vTexCoord.xy;
-//   uv.y = 1.0 - uv.y;
-  
-//   // vec2 left = vec2(-1.0,0.0) / u_resolution.xy;
-//   // vec2 uv_left = uv + left;
-//   // vec4 tex_left = texture2D(u_tex0, uv_left);
-//   // vec4 tex = texture2D(u_tex0, uv);
-//   // vec4 color = max(tex,tex_left);
-
-//   vec4 rip = Ripples(u_tex0, uv);
-//  // vec3 col = vec3(rip);
-//   // vec3 col1 = vec3(0.01, 0.01, 1.0);
-//   // vec3 color = max(col, col1);
-  
-//   //gl_FragColor = vec4(col, 1.0);
-//   gl_FragColor = rip;
-// }
-
-
-// //   vec3 col = texture2D(u_tex0, uv).rgb;
-// //   //float rip = Ripples(u_tex0, uv);
-// //   //vec3 col = vec3(rip.r);
-// //   // vec3 col = vec3(rip);
-// //   vec3 col1 = vec3(0.9, 0.3, 0.1);
-// //   col = max(col, col1);
-// //   gl_FragColor = vec4(col, 1.0);
-// // }
-
-

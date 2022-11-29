@@ -71,12 +71,20 @@ float sdCircle( vec2 p, float r )
 }
 
 void main() {
-  vec2 uv = (2.0 * gl_FragCoord.xy - u_resolution.xy)/ u_resolution.y;
-  vec2 st = vTexCoord * 2.0;
-  vec3 col = texture2D(u_tex0, st).rgb;
-  float d = sdCircle( uv, 0.05);
-  float m = S(0.08, 0.0, d);
+//   vec2 uv = (2.0 * gl_FragCoord.xy - u_resolution.xy)/ u_resolution.y;
+//  vec2 st = gl_FragCoord.xy / u_resolution.xy;
+  vec2 uv = vTexCoord * 2.0 ;
+  uv.y = 1.0 - uv.y;
+  // vec2 left = vec2(-1.0,0.0) / u_resolution.xy;
+  // vec2 uv_left = uv + left;
+  // float t = texture2D(u_tex0, uv_left).r;
+  //vec3 c1 = vec3(t, 0.0, 0.0);
+  float d = sdCircle( uv - vec2(0.1, 0.0), 0.05);
+  float m = S(0.008, 0.0, d);
+  vec3 col = vec3(0.0);
   col +=  m*GREEN;
+  //col = mix(c1, col, 0.5);
+  //vec3 col = vec3(xd, nx);
   gl_FragColor = vec4(col, 1.0);
 }
 
