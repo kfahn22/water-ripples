@@ -1,5 +1,7 @@
+// Based on Water Ripples Coding Challenge by Daniel Shiffman
+// https://thecodingtrain.com/challenges/102-2d-water-ripple
+
 let img0, img1;
-let img;
 let theShader;
 let oldTime;
 let shaderNdx = 0;
@@ -66,7 +68,8 @@ function draw() {
     if (theShader == shaders[0]) {
        theShader.setUniform("u_resolution", [width, height]);
         theShader.setUniform("u_tex0", img0);
-       buffer.shader(theShader);
+        buffer.shader(theShader);
+        texture(buffer);
         buffer.rect(0, 0, width, height);
         img1.loadPixels();
         img1.copy(buffer, -width, -height, width, height, 0, 0, 2 * width, 2 * height);
@@ -77,7 +80,7 @@ function draw() {
         // want to update image passed to shader
         theShader.setUniform("u_resolution", [width, height]);
         theShader.setUniform("u_tex0", img1);
-      buffer.shader(theShader);
+        buffer.shader(theShader);
         buffer.rect(0, 0, width, height);
         img0.copy(buffer, -width, -height, width, height, 0, 0, 2 * width, 2 * height);
         img0.updatePixels();

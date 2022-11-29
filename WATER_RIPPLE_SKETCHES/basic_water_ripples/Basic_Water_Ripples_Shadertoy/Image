@@ -1,33 +1,18 @@
 //copied from https://www.shadertoy.com/view/WtsyzS
 //image has input B (ichannel0), stoneTexture (ichannel1)
 
-#ifdef GL_ES
-precision highp float;
-#endif
-
-uniform vec2 u_resolution;
-uniform sampler2D uSampler; // texture from sketchA
-//uniform sampler2D uSamplerB; // texture from sketchB
-uniform float iTime;
-uniform vec2 iMouse;
-uniform sampler2D u_tex0; // texture from image
-varying vec2 vTexCoord;
-
-uniform sampler2D uSampler;
-varying vec2 vTexCoord;
-
 //image has input B, stoneTexture
-void main()
+void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {  
-	vec2 uv = gl_FragCoord.xy / u_esolution.xy;
+	vec2 uv = fragCoord.xy / iResolution.xy;
 
     // lets calculate normals for distortion
     float nFactor = 10.;
-    vec2 step = 2. / u_resolution.xy;
+    vec2 step = 2. / iResolution.xy;
     vec2 xd = vec2( 1., 0.);
     vec2 yd = vec2( 0., 1.);
-	float nx = texture2D( iChannel0, uv + step * xd ).r - texture( iChannel0, uv - step * xd ).r;
-    float ny = texture2D( iChannel0, uv + step * yd ).r - texture( iChannel0, uv - step * yd ).r;
+	float nx = texture( iChannel0, uv + step * xd ).r - texture( iChannel0, uv - step * xd ).r;
+    float ny = texture( iChannel0, uv + step * yd ).r - texture( iChannel0, uv - step * yd ).r;
     vec3 normal = normalize(vec3(nx * nFactor, 1., ny * nFactor));
     
     // blur the image a bit

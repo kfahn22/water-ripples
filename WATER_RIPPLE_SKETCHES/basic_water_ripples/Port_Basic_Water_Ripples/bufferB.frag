@@ -5,7 +5,7 @@
 precision highp float;
 #endif
 
-uniform sampler2D uSampler;
+uniform sampler2D uSampler; // input from buffer A 
 varying vec2 vTexCoord;
 
 void main()
