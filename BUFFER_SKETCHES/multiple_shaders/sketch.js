@@ -1,3 +1,5 @@
+// This sketch draws two shaders at the same time but I haven't figured out how 
+// to get a buffer
 
 let img;
 let buffer, current;
@@ -29,18 +31,18 @@ function setup() {
 
     buffer = createGraphics(400, 400, WEBGL);
     current = createGraphics(400, 400, WEBGL);
-    img = createImage(400,400);
+    img = createImage(400, 400);
     img.loadPixels();
     for (let i = 0; i < img.pixels.length; i += 4) {
         let val = 0;
-        if (random(1) < 0.01) val = 255;
-        img.pixels[i + 0] = val;
-        img.pixels[i + 1] = val;
-        img.pixels[i + 2] = val;
+       // if (random(1) < 0.01) val = 255;
+        img.pixels[i + 0] = 0;
+        img.pixels[i + 1] = 0;
+        img.pixels[i + 2] = 0;
         img.pixels[i + 3] = 255;
     }
     img.updatePixels();
-    
+
     //imageMode(CENTER);
 }
 
@@ -52,28 +54,30 @@ function draw() {
     background(220);
     if (theShader == shaders[0]) {
         theShader.setUniform("u_resolution", [width, height]);
+        theShader.setUniform("iTime", millis() / 1000.);
         theShader.setUniform("u_tex0", img);
         buffer.shader(shaders[0]);
         texture(buffer);
         buffer.rect(0, 0, width, height);
         img.loadPixels();
-        img.copy(buffer, -width, -height, width, height, 0, 0, 2 * width, 2 * height);
+        img.copy(buffer, 0, 0, width, height, 0, 0, width, height);
         img.updatePixels();
         theShader = shaders[1];
     } else {
         // want to update image passed to shader
         theShader.setUniform("u_resolution", [width, height]);
+        theShader.setUniform("iTime", millis() / 1000.);
         theShader.setUniform("u_tex0", img);
         current.shader(shaders[1]);
         texture(current);
         current.rect(0, 0, width, height);
         img.loadPixels();
-        img.copy(current, -width, -height, width, height, 0, 0, 2 * width, 2 * height);
+        img.copy(current, 0, 0, width, height, 0, 0, width, height);
         img.updatePixels();
         theShader = shaders[0];
     }
 
     background(0);
-    
-    rect(-width/2, -height/2, width, height);
+    rect(-width / 2, -height / 2, width, height);
+    //rect(0,0, width, height);
 }
