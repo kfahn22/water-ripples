@@ -8,6 +8,10 @@ uniform sampler2D uSampler;
 uniform vec2 iMouse;
 uniform float iTime;
 
+#define S smoothstep
+#define FUSHIA vec3(236,1,90)/255.
+#define GREEN vec3(102, 211, 52)/255.
+
 //uniform sampler2D u_tex1;
 
 varying vec2 vTexCoord;
@@ -61,18 +65,33 @@ vec4 Ripples(sampler2D uSampler, vec2 uv )
   return vec4(finalColor, 1.0);
   }
 
-void main() {
-  
-  // vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-  vec2 uv = vTexCoord * 2.0;
-  uv.y = 1.0 - uv.y;
-  vec2 left = vec2(-1.0,0.0) / u_resolution.xy;
-  vec2 uv_left = uv + left;
-  vec4 tex_left = texture2D(u_tex0, uv_left);
-  vec4 tex = texture2D(u_tex0, uv);
-  vec4 color = max(tex,tex_left);
-  gl_FragColor = color;
+float sdCircle( vec2 p, float r )
+{
+    return length(p) - r;
 }
+
+void main() {
+  vec2 uv = (2.0 * gl_FragCoord.xy - u_resolution.xy)/ u_resolution.y;
+  vec2 st = vTexCoord * 2.0;
+  vec3 col = texture2D(u_tex0, st).rgb;
+  float d = sdCircle( uv, 0.05);
+  float m = S(0.08, 0.0, d);
+  col +=  m*GREEN;
+  gl_FragColor = vec4(col, 1.0);
+}
+
+// void main() {
+  
+//   // vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+//   vec2 uv = vTexCoord * 2.0;
+//   uv.y = 1.0 - uv.y;
+//   vec2 left = vec2(-1.0,0.0) / u_resolution.xy;
+//   vec2 uv_left = uv + left;
+//   vec4 tex_left = texture2D(u_tex0, uv_left);
+//   vec4 tex = texture2D(u_tex0, uv);
+//   vec4 color = max(tex,tex_left);
+//   gl_FragColor = color;
+// }
 
 // void main() {
   

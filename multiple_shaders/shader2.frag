@@ -12,6 +12,9 @@ uniform float iTime;
 
 varying vec2 vTexCoord;
 
+#define S smoothstep
+#define PURPLE vec3(146,83,161)/255
+
 vec4 Ripples(sampler2D uSampler, vec2 uv )
 {
     vec2 st = gl_FragCoord.xy / u_resolution.xy;
@@ -61,18 +64,32 @@ vec4 Ripples(sampler2D uSampler, vec2 uv )
  return vec4(finalColor, 1.0);
   }
 
-void main() {
-  
-  // vec2 uv = gl_FragCoord.xy / u_resolution.xy;
-  vec2 uv = vTexCoord;
-  uv.y = 1.0 - uv.y;
-  vec2 up = vec2(1.0,-1.0) / u_resolution.xy;
-  vec2 uv_up = uv + up;
-  vec4 tex_up = texture2D(u_tex0, uv_up);
-  vec4 tex = texture2D(u_tex0, uv);
-  vec4 color = max(tex,tex_up);
-  gl_FragColor = color;
+float sdBox( in vec2 p, in vec2 b )
+{
+    vec2 d = abs(p)-b;
+    return length(max(d,0.0)) + min(max(d.x,d.y),0.0);
 }
+
+void main() {
+  vec2 uv =(2.0 * gl_FragCoord.xy - u_resolution.xy) / u_resolution.y;
+  vec3 col = texture2D(u_tex0, uv).rgb;
+  float d = sdBox(uv, vec2(0.1));
+  float m = S(0.08, 0.0, d);
+  col += m*PURPLE;
+  gl_FragColor = vec4(col, 1.0);
+}
+// void main() {
+  
+//   // vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+//   vec2 uv = vTexCoord;
+//   uv.y = 1.0 - uv.y;
+//   vec2 up = vec2(1.0,-1.0) / u_resolution.xy;
+//   vec2 uv_up = uv + up;
+//   vec4 tex_up = texture2D(u_tex0, uv_up);
+//   vec4 tex = texture2D(u_tex0, uv);
+//   vec4 color = max(tex,tex_up);
+//   gl_FragColor = color;
+// }
 
 
 // void main() {

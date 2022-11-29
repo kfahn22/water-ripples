@@ -34,13 +34,14 @@ function setup() {
     img0.loadPixels();
     for (let i = 0; i < img0.pixels.length; i += 4) {
         let value = 0;
-        if (random(1) < 0.01) value = 255;
-        img0.pixels[i + 0] = value;
-        img0.pixels[i + 1] = value;
-        img0.pixels[i + 2] = value;
+        //if (random(1) < 0.01) value = 255;
+        img0.pixels[i + 0] = 248; //value;
+        img0.pixels[i + 1] = 158; //value;
+        img0.pixels[i + 2] = 79; //value;
         img0.pixels[i + 3] = 255;
     }
     img0.updatePixels();
+    //img1.copy(img0, )
     //imageMode(CENTER);
 }
 
@@ -58,26 +59,30 @@ function draw() {
     //     shaderNdx = (shaderNdx + 1) % shaders.length;
     //     theShader = shaders[shaderNdx]
     // }
+    //theShader.setUniform("u_resolution", [width, height]);
+    //buffer.shader(theShader);
+    //buffer.rect(0, 0, width, height);
     background(220);
     if (theShader == shaders[0]) {
-        theShader.setUniform("u_resolution", [width, height]);
+       theShader.setUniform("u_resolution", [width, height]);
         theShader.setUniform("u_tex0", img0);
-        buffer.shader(theShader);
+       buffer.shader(theShader);
         buffer.rect(0, 0, width, height);
-        img1.copy(buffer, -width, -height, width, height, 0, 0, 2*width, 2*height);
-        //img0.updatePixels();
-    
+        img1.loadPixels();
+        img1.copy(buffer, -width, -height, width, height, 0, 0, 2 * width, 2 * height);
+        img1.updatePixels();
+
         theShader = shaders[1];
     } else {
         // want to update image passed to shader
         theShader.setUniform("u_resolution", [width, height]);
         theShader.setUniform("u_tex0", img1);
-        buffer.shader(theShader);
+      buffer.shader(theShader);
         buffer.rect(0, 0, width, height);
-        img0.copy(buffer, -width, -height, width, height, 0, 0, 2*width, 2*height);
+        img0.copy(buffer, -width, -height, width, height, 0, 0, 2 * width, 2 * height);
         img0.updatePixels();
         theShader = shaders[0];
     }
-    //image(buffer, 0,0, -width,-height);
-image(buffer, -width / 2, -height / 2);
+   
+    image(buffer, -width / 2, -height / 2);
 }
