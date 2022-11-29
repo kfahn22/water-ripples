@@ -27,6 +27,5 @@ void main() {
   float x = min(1., iTime);
   col += GREEN*Dot(uv, x, 0.0);
   
- // if (abs(abs(uv.x)-0.8)< 0.002) col += 1.;
   gl_FragColor = vec4(col, 1.0);
 }
