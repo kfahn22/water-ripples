@@ -1,12 +1,12 @@
 // Ported from https://www.shadertoy.com/view/WtsyzS
 // Created by Xeke1404 in 2020-06-17
-// image has input B (ichannel), stoneTexture (ichannelB)
+// image has from bufferB and stoneTexture (image)
 
 #ifdef GL_ES
 precision highp float;
 #endif
 
-uniform sampler2D uSampler; // texture from sketch
+uniform sampler2D uSampler; // texture from bufferB
 uniform sampler2D u_tex0; // texture from image
 uniform float iTime;
 uniform float iMouse;

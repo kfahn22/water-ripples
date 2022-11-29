@@ -5,7 +5,7 @@
 precision highp float;
 #endif
 
-uniform sampler2D uSampler;
+uniform sampler2D uSampler; // should get texture from bufferB
 uniform float iTime;
 varying vec2 vTexCoord;
 
@@ -13,7 +13,7 @@ void main()
 {
     vec2 uv = gl_FragCoord/u_resolution.xy;
     vec2 centered = (uv - vec2(0.5)) * 2.;	// center to (-1 1)
-    vec4 col = 2Dtexture(uSampler, uv);
+    vec4 col = texture2D(uSampler, uv);
     vec4 finalColor = col;
     
     

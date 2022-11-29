@@ -16,5 +16,4 @@ void main() {
   gl_Position = positionVec4;
   
   vTexCoord = aTexCoord;
-  
 }
