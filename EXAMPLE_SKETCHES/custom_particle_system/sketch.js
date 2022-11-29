@@ -1,4 +1,5 @@
 // copied from aferriss
+// https://github.com/aferriss/p5jsShaderExamples
 
 let m1;
 let shader1;
